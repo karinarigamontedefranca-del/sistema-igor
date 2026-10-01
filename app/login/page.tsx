@@ -6,6 +6,7 @@ export default function LoginPage() {
   const [pin, setPin] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [show, setShow] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,13 +40,19 @@ export default function LoginPage() {
           <label htmlFor="pin">PIN</label>
           <input
             id="pin"
-            type="password"
-            inputMode="numeric"
+            type={show ? "text" : "password"}
+            inputMode="text"
+            autoCapitalize="none"
+            autoCorrect="off"
             autoComplete="off"
+            spellCheck={false}
             autoFocus
             value={pin}
             onChange={(e) => setPin(e.target.value)}
           />
+          <button type="button" className="btn ghost" style={{ alignSelf: "flex-end" }} onClick={() => setShow((s) => !s)}>
+            {show ? "Ocultar" : "Mostrar"}
+          </button>
         </div>
         {error && <div className="notice err">{error}</div>}
         <button className="btn primary" style={{ width: "100%" }} disabled={busy || !pin.trim()}>
